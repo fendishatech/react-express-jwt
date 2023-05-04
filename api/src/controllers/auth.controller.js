@@ -50,7 +50,7 @@ const login = async (req, res) => {
     const refreshToken = generateRefreshToken(userPayload);
 
     // ^ Update user refresh token in db for user.
-    user.update({ refresh_token: refreshToken });
+    await user.update({ refresh_token: refreshToken });
 
     // ^ Set tokens to cookies.
     res.cookie(ACCESS_TOKEN_COOKIE_NAME, accessToken, {
@@ -125,11 +125,46 @@ const refreshAccessToken = async (req, res) => {
 };
 
 // * LOGOUT
-const logout = (req, res) => {
-  return res.json({ message: "Yes this is up" });
+const logout = async (req, res) => {
+  console.log("I am Here");
+  try {
+    const refreshToken = req.cookies[REFRESH_TOKEN_COOKIE_NAME];
+
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "UNAUTHORIZED_MESSAGE",
+      });
+    }
+
+    const user = await User.findOne({
+      where: {
+        refresh_token: refreshToken,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        error: "NO_USER_MESSAGE",
+      });
+    }
+
+    await user.update({ refresh_token: null });
+
+    res.clearCookie(ACCESS_TOKEN_COOKIE_NAME);
+    res.clearCookie(REFRESH_TOKEN_COOKIE_NAME);
+
+    return res.status(200).json({
+      message: "LOGOUT_MESSAGE",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
 
-// * REFRESH
+// * REGISTER
 const register = (req, res) => {
   return res.json({ message: "Yes this is up" });
 };

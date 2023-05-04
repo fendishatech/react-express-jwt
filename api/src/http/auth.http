@@ -1,6 +1,9 @@
 @BASE_URL = http://localhost:3333/api/
 
 ###
+GET {{BASE_URL}}cookies HTTP/1.1
+
+###
 GET {{BASE_URL}}/auth/refresh HTTP/1.1
 
 ###
@@ -13,4 +16,5 @@ Content-Type: application/json
 }
 
 ###
-GET {{BASE_URL}}/users/logout HTTP/1.1
+POST {{BASE_URL}}/auth/logout HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtpZHVzIiwidXNlcl9yb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODMyNDQzNTcsImV4cCI6MTY4MzI0NDM4N30.0zamvs3uv6WcgvON_c6MtoVJR5keTQP0HOehLireU_o

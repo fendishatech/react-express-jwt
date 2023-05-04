@@ -20,6 +20,12 @@ app.use(cors());
 
 app.use("/api/", authRouter);
 app.use("/api/", userRouter);
+app.use("/api/cookies", (req, res) => {
+  res.json({
+    cookies: req.cookies,
+    secret: req.cookies.otp_secret,
+  });
+});
 
 app.listen(process.env.PORT, () => {
   console.log(`App running on http://localhost:${process.env.PORT}`);
