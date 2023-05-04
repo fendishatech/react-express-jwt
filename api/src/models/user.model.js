@@ -16,6 +16,9 @@ const User = db.define(
     user_role: {
       type: DataTypes.ENUM(userRoleEnums),
     },
+    refresh_token: {
+      type: DataTypes.STRING,
+    },
   },
   {
     freezeTableName: true,

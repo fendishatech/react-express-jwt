@@ -1,7 +1,16 @@
 @BASE_URL = http://localhost:3333/api/
 
 ###
-GET {{BASE_URL}}/users HTTP/1.1
+GET {{BASE_URL}}/auth/refresh HTTP/1.1
 
 ###
-GET {{BASE_URL}}/users/1 HTTP/1.1
+POST {{BASE_URL}}/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username" : "kidus",
+    "password" : 123456
+}
+
+###
+GET {{BASE_URL}}/users/logout HTTP/1.1
