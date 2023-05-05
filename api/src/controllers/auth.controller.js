@@ -24,7 +24,7 @@ const login = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({
+      return res.json({
         success: false,
         message: "User could not be found.",
       });
@@ -64,6 +64,7 @@ const login = async (req, res) => {
     // ^ Respond error or success.
     return res.json({
       success: true,
+      message: "Logged in successfully!",
       accessToken,
     });
   } catch (error) {
